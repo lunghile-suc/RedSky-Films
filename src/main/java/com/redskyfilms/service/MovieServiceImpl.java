@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.redskyfilms.exceptions.MovieNotFound;
 import com.redskyfilms.model.Movie;
 import com.redskyfilms.repository.MovieRepository;
 
@@ -27,6 +28,13 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Optional<Movie> get_movie(Long id) {
-        return movieRepository.findById(id);
+
+        Movie movie = movieRepository.findById(id).orElse(null);
+
+        if(movie==null){
+            throw new MovieNotFound("Movie not found with id " + id);
+        }else{
+            return movieRepository.findById(id);
+        }
     }
 }

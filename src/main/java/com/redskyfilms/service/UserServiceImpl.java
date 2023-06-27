@@ -2,11 +2,10 @@ package com.redskyfilms.service;
 
 import java.util.Optional;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.redskyfilms.entity.UserEntity;
+import com.redskyfilms.exceptions.UserNotFound;
 import com.redskyfilms.model.User;
 import com.redskyfilms.repository.UserRepository;
 
@@ -18,19 +17,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create_user_account(User user) {
-        
-        UserEntity userEntity = new UserEntity();
-
-        BeanUtils.copyProperties(user, userEntity);
-
-        userRepository.save(userEntity);
-
-        return user;
+        return userRepository.save(user);
     }
 
     @Override
-    public Optional<UserEntity> get_user_by_id(Long id) {
+    public Optional<User> get_user_by_id(Long id) {
+        User user = userRepository.findById(id).orElse(null);
 
-        return userRepository.findById(id);
+        if(user==null){
+            throw new UserNotFound("User with " + id + " is not found");
+        }else{
+            return userRepository.findById(id);
+        }
     }
 }

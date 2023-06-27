@@ -1,6 +1,8 @@
 package com.redskyfilms.model;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,6 +20,11 @@ public class Booking {
 
     private Long user_id;
     private Long movie_id;
-    private Date booking_date;
-    private Long booking_code;
+    private Long seat_id;
+    private int row_no;
+
+    @CreationTimestamp
+    private LocalDateTime booking_date;
+
+    private String booking_code;
 }

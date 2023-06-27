@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.redskyfilms.entity.UserEntity;
 import com.redskyfilms.model.User;
 import com.redskyfilms.service.UserService;
 
@@ -25,9 +24,9 @@ public class UserController {
     public User create_user_account(@RequestBody User user){
         return userService.create_user_account(user);
     }
-
+ 
     @GetMapping("/user/{id}")
-    public Optional<UserEntity> get_user_by_id(@PathVariable Long id){
+    public Optional<User> get_user_by_id(@PathVariable Long id){
         return userService.get_user_by_id(id);
     }
 }
